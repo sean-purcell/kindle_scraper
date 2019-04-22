@@ -1,0 +1,5 @@
+*.sw*
+gmail_token.pickle
+project_credentials.json
+__pycache__/
+env/
