@@ -3,3 +3,7 @@ token: gmail_token.pickle
 
 [kindle]
 address: seanpurcell97@kindle.com
+
+[scraping]
+state: state.json
+modules: pgte,wtc,ms
