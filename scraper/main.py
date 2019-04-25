@@ -5,7 +5,10 @@ import os.path
 import sys
 import traceback
 
-from scraper import gmail
+import scraper.flags
+import scraper.gmail
+
+flags = scraper.flags.get_flags()
 
 def run_module(name, state, creds):
     print(f"Running scraper for {name}")
@@ -20,31 +23,33 @@ def run_module(name, state, creds):
         print(f"Failed to scrape {name}:\n{tb}")
     return [], None
 
-def send_docs(cfg, creds, docs):
+def send_docs(creds, docs):
+    if flags.no_send:
+        return True
     for name, content in docs:
-        gmail.send_html(cfg, creds, name, content)
+        print(f"Sending {name}")
+        scraper.gmail.send_html(creds, name, content)
 
-def get_state(cfg):
-    state_path = cfg["scraping"]["state"]
+def get_state():
+    state_path = flags.state_file
     if os.path.exists(state_path):
         return json.loads(open(state_path, "r").read())
     else:
         return {}
 
-def store_state(cfg, state):
-    state_path = cfg["scraping"]["state"]
+def store_state(state):
+    state_path = flags.state_file
     with open(state_path, "w") as f:
         f.write(json.dumps(state) + "\n")
 
 def main():
-    cfg = configparser.ConfigParser()
-    cfg.read("CONFIG")
+    scraper.flags.get_flags()
 
-    creds = gmail.get_creds(cfg["email"]["token"])
+    creds = scraper.gmail.get_creds(flags.email_token)
 
-    state = get_state(cfg)
+    state = get_state()
 
-    mods = cfg["scraping"]["modules"].split(",")
+    mods = flags.modules.split(",")
     print(state)
     print(mods)
 
@@ -58,9 +63,9 @@ def main():
         all_docs += docs
     print(f"Obtained {len(all_docs)} documents")
 
-    send_docs(cfg, creds, all_docs)
+    send_docs(creds, all_docs)
 
-    store_state(cfg, new_state)
+    store_state(new_state)
 
 if __name__ == "__main__":
     main()

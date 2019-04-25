@@ -1,10 +1,8 @@
-[email]
-token: gmail_token.pickle
-address: seanp.auto@gmail.com
+email_token = gmail_token.pickle
+src_address = seanp.auto@gmail.com
 
-[kindle]
-address: seanpurcell97@kindle.com
+dst_address = seanpurcell97@kindle.com
 
-[scraping]
-state: state.json
-modules: pgte,wtc,ms
+state_file = state.json
+
+modules = pgte,wtc,ms

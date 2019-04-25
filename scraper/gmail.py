@@ -7,6 +7,10 @@ from email.mime.text import MIMEText
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 
+import scraper.flags
+
+flags = scraper.flags.get_flags()
+
 def get_creds(token_file):
     SCOPE_PREFIX = "https://www.googleapis.com/auth/gmail."
     SCOPES = [f"{SCOPE_PREFIX}{scope}" for scope in ["readonly", "send"]]
@@ -23,10 +27,10 @@ def get_creds(token_file):
             raise RuntimeError("Invalid credentials")
     return creds
 
-def send_html(cfg, creds, name, content):
+def send_html(creds, name, content):
     message = MIMEMultipart()
-    message["to"] = cfg["kindle"]["address"]
-    message["from"] = cfg["email"]["address"]
+    message["to"] = flags.dst_address
+    message["from"] = flags.src_address
     message["subject"] = name
 
     fname = f"{name}.html"
