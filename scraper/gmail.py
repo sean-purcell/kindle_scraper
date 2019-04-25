@@ -1,5 +1,9 @@
+import base64
 import pickle
 import os.path
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 
@@ -18,3 +22,27 @@ def get_creds(token_file):
         if not creds or not creds.valid:
             raise RuntimeError("Invalid credentials")
     return creds
+
+def send_html(cfg, creds, name, content):
+    message = MIMEMultipart()
+    message["to"] = cfg["kindle"]["address"]
+    message["from"] = cfg["email"]["address"]
+    message["subject"] = name
+
+    fname = f"{name}.html"
+    base = MIMEText(f"{name} is attached")
+    message.attach(base)
+
+    attachment = MIMEText(content, "html")
+    attachment.add_header("Content-Disposition", "attachment", filename=fname)
+
+    message.attach(attachment)
+
+    mail = {
+        "raw": base64.urlsafe_b64encode(message.as_string().encode("utf-8")).decode(
+            "ascii"
+        )
+    }
+
+    service = build("gmail", "v1", credentials=creds)
+    service.users().messages().send(userId="me", body=mail).execute()

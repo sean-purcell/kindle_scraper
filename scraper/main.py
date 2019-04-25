@@ -20,6 +20,10 @@ def run_module(name, state, creds):
         print(f"Failed to scrape {name}:\n{tb}")
     return [], None
 
+def send_docs(cfg, creds, docs):
+    for name, content in docs:
+        gmail.send_html(cfg, creds, name, content)
+
 def get_state(cfg):
     state_path = cfg["scraping"]["state"]
     if os.path.exists(state_path):
@@ -53,6 +57,9 @@ def main():
             new_state[name] = ns
         all_docs += docs
     print(f"Obtained {len(all_docs)} documents")
+
+    send_docs(cfg, creds, all_docs)
+
     store_state(cfg, new_state)
 
 if __name__ == "__main__":

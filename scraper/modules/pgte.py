@@ -27,5 +27,5 @@ def scrape(state, _creds):
     out = []
     for ts, title, text in chapters:
         previous = max(previous, ts)
-        out.append((f"{title}.html", scraper.util.format_chapter(title, text, AUTHOR)))
+        out.append((title, scraper.util.format_chapter(title, text, AUTHOR)))
     return (out, {"previous": previous})
