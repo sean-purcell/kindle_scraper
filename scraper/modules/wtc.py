@@ -42,7 +42,6 @@ def scrape(state, _creds):
     min_idx = state.get("idx", 0)
 
     loop = asyncio.get_event_loop()
-    loop.set_debug(True)
     chapters = loop.run_until_complete(_get_after(min_idx))
 
     return (

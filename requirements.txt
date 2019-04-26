@@ -16,10 +16,8 @@ google-auth-oauthlib==0.3.0
 httplib2==0.12.3
 idna==2.8
 idna-ssl==1.1.0
-lxml==4.3.3
 multidict==4.5.2
 oauthlib==3.0.1
-pkg-resources==0.0.0
 pyasn1==0.4.5
 pyasn1-modules==0.2.5
 requests==2.21.0
