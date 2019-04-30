@@ -1,5 +1,6 @@
 *.sw*
-gmail_token.pickle
+*.pickle
+*.tar.zst
 project_credentials.json
 __pycache__/
 env/
