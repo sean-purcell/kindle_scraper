@@ -41,8 +41,7 @@ async def _get_after(prev_idx):
 def scrape(state, _creds):
     min_idx = state.get("idx", 0)
 
-    loop = asyncio.get_event_loop()
-    chapters = loop.run_until_complete(_get_after(min_idx))
+    chapters = asyncio.run(_get_after(min_idx))
 
     return (
         [
