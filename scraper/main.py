@@ -24,11 +24,15 @@ def run_module(name, state, creds):
     return [], None
 
 def send_docs(creds, docs):
-    if flags.no_send:
-        return True
-    for name, content in docs:
-        print(f"Sending {name}")
-        scraper.gmail.send_html(creds, name, content)
+    if not flags.no_send:
+        for name, content in docs:
+            print(f"Sending {name}")
+            scraper.gmail.send_html(creds, name, content)
+    if flags.write_to_file:
+        for name, content in docs:
+            print(f"Writing to {name}.html")
+            with open(f"{name}.html", "w") as out:
+                out.write(content)
 
 def get_state():
     state_path = flags.state_file

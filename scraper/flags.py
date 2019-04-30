@@ -18,6 +18,7 @@ def get_flags():
     p.add("--modules", required=True)
 
     p.add("--no-send", help="update state without sending", default=False)
+    p.add("--write-to-file", help="write documents to files", default=False)
 
     _flags = p.parse_args()
     return _flags
