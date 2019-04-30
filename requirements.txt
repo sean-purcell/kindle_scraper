@@ -1,3 +1,5 @@
+aiofiles==0.4.0
+aiogoogle==0.1.10
 aiohttp==3.5.4
 async-timeout==3.0.1
 asyncio==3.4.3
@@ -25,6 +27,7 @@ requests-oauthlib==1.2.0
 rsa==4.0
 six==1.12.0
 soupsieve==1.9.1
+tonyg-rfc3339==0.1
 typing-extensions==3.7.2
 uritemplate==3.0.0
 urllib3==1.24.2
