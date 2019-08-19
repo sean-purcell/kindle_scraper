@@ -32,7 +32,7 @@ async def _scrape_chapter(session, url):
         date = dateutil.parser.parse(datestr)
         paragraphs = (soup
                 .find("div", "entry-content")
-                .find_all("p", recursive=False)[1:-1])
+                .find_all(["p","hr"], recursive=False)[1:-1])
         content = '\n'.join(
                 p.prettify(formatter="html") for p in paragraphs)
 
