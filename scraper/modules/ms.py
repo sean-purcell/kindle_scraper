@@ -64,7 +64,10 @@ async def _get_email(session, gmail, key):
     html = base64.urlsafe_b64decode(b64).decode("utf-8")
 
     soup = bs4.BeautifulSoup(html, features="lxml")
-    article = str(soup.find("td", "contents").decode_contents())
+    a1 = soup.find("td", "contents")
+    a2 = soup.find("td", "body-copy")
+    article = a2 if a2 else a1
+    article = str(article.decode_contents())
 
     return (subject, article, ts)
 
