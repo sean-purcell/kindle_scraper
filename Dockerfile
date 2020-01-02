@@ -1,13 +1,12 @@
-FROM alpine:latest
+FROM alpine:edge
 
 WORKDIR /app
 
 RUN apk --no-cache add bash python3
-
-ADD requirements.txt /app/
 RUN pip3 install --trusted-host pypi.python.org --upgrade pip
 
 RUN apk --no-cache add py3-lxml
+ADD requirements.txt /app/
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 
 ADD scraper /app/scraper/

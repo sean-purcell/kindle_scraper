@@ -5,4 +5,4 @@ dst_address = seanpurcell97@kindle.com
 
 state_file = state.json
 
-modules = pgte,wtc,ms
+modules = pgte,wtc,ms,tgab
