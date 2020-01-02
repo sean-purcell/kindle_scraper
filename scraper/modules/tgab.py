@@ -2,6 +2,8 @@ import asyncio
 import aiohttp
 import bs4
 import dateutil.parser
+import feedparser
+import time
 
 import scraper.util
 
@@ -9,6 +11,29 @@ BASEURL = "https://tiraas.net/"
 
 TITLE = "The Gods are Bastards"
 AUTHOR = "D.D. Webb"
+
+def _get_chapters(previous):
+    feed = feedparser.parse(BASEURL + "feed/")
+
+    return sorted(
+        filter(
+            lambda x: x[0] > previous,
+            [
+                (time.mktime(ent.published_parsed), ent.title, ent.content[0].value)
+                for ent in feed.entries
+            ],
+        )
+    )
+
+def scrape(state, _creds):
+    previous = state.get("previous", 0)
+    chapters = _get_chapters(previous)
+
+    out = []
+    for ts, title, text in chapters:
+        previous = max(previous, ts)
+        out.append((title, scraper.util.format_chapter(title, text, AUTHOR)))
+    return (out, {"previous": previous})
 
 async def _scrape_index(session):
     async with session.get(BASEURL + "table-of-contents/", timeout=60) as resp:
