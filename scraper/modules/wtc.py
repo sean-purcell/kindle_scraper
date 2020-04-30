@@ -26,7 +26,7 @@ def _parse_chapter(text):
     return str(soup.find("div", "chapter"))
 
 async def _get_after(prev_idx):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(headers={'User-Agent': 'python-requests/2.22.0'}) as session:
         print(f"Getting index")
         chaps = await _scrape_index(session)
         chaps = [(idx, name, key) for (idx, name, key) in chaps if idx > prev_idx]
