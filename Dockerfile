@@ -2,10 +2,10 @@ FROM alpine:edge
 
 WORKDIR /app
 
-RUN apk --no-cache add bash python3
+RUN apk --no-cache add bash python3 py3-pip
 RUN pip3 install --trusted-host pypi.python.org --upgrade pip
 
-RUN apk --no-cache add py3-lxml
+RUN apk --no-cache add py3-lxml py3-multidict py3-wheel py3-yarl
 ADD requirements.txt /app/
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 
