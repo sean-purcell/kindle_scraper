@@ -17,7 +17,8 @@ def run_module(name, state, creds):
         mod = importlib.import_module(f"scraper.modules.{name}")
         return mod.scrape(state, creds)
     except ImportError:
-        print(f"No scraper found for {name}")
+        tb = traceback.format_exc()
+        print(f"No scraper found for {name}:\n{tb}")
     except Exception as err:
         tb = traceback.format_exc()
         print(f"Failed to scrape {name}:\n{tb}")

@@ -3,6 +3,6 @@ src_address = seanp.auto@gmail.com
 
 dst_address = seanpurcell97@kindle.com
 
-state_file = state.json
+state_file = /data/scraper_state.json
 
 modules = pgte,wtc,ms,tgab
