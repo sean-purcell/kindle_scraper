@@ -1,10 +1,11 @@
 import asyncio
-from aiogoogle import Aiogoogle
+from aiogoogle import Aiogoogle, GoogleAPI
 from aiogoogle.auth.creds import ClientCreds, UserCreds
 import base64
 import bs4
 
 import scraper.util
+import scraper.flags
 
 AUTHOR = "Matt Levine"
 
@@ -71,13 +72,11 @@ async def _get_email(session, gmail, key):
 
     return (subject, article, ts)
 
-async def _get_after(creds, timestamp):
+async def _get_after(gmail, creds, timestamp):
     async with Aiogoogle(
         user_creds=_get_user_creds(creds), client_creds=_get_client_creds
     ) as session:
         print(f"Getting emails")
-
-        gmail = await session.discover("gmail", "v1")
 
         ids = await _get_email_ids(session, gmail)
         print(f"Found {len(ids)} ids")
@@ -93,7 +92,9 @@ async def _get_after(creds, timestamp):
 def scrape(state, creds):
     timestamp = state.get("timestamp", 0)
 
-    emails = asyncio.run(_get_after(creds, timestamp))
+    gmail = GoogleAPI(open(scraper.flags.get_flags().gmail_discovery, 'rb'))
+
+    emails = asyncio.run(_get_after(creds, gmail, timestamp))
 
     return (
         [

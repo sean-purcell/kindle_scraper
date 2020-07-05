@@ -1,4 +1,5 @@
 email_token = gmail_token.pickle
+gmail_discovery = gmail_v1.json
 src_address = seanp.auto@gmail.com
 
 dst_address = seanpurcell97@kindle.com

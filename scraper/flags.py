@@ -12,6 +12,7 @@ def get_flags():
 
     # Config options
     p.add("--email_token", required=True)
+    p.add("--gmail_discovery", required=True)
     p.add("--src_address", required=True)
     p.add("--dst_address", required=True)
     p.add("--state_file", required=True)

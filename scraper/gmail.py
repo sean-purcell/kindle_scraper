@@ -27,7 +27,7 @@ def get_creds(token_file):
             raise RuntimeError("Invalid credentials")
     return creds
 
-def send_html(creds, name, content):
+def send_html(creds, discovery, name, content):
     message = MIMEMultipart()
     message["to"] = flags.dst_address
     message["from"] = flags.src_address
@@ -48,5 +48,5 @@ def send_html(creds, name, content):
         )
     }
 
-    service = build("gmail", "v1", credentials=creds)
+    service = build_from_document(discovery, credentials=creds)
     service.users().messages().send(userId="me", body=mail).execute()

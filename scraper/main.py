@@ -26,9 +26,10 @@ def run_module(name, state, creds):
 
 def send_docs(creds, docs):
     if not flags.no_send:
+        discovery = open(flags.gmail_discovery, 'rb')
         for name, content in docs:
             print(f"Sending {name}")
-            scraper.gmail.send_html(creds, name, content)
+            scraper.gmail.send_html(creds, discovery, name, content)
     if flags.write_to_file:
         for name, content in docs:
             print(f"Writing to {name}.html")
