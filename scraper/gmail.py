@@ -4,7 +4,7 @@ import os.path
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build_from_document
 from google.auth.transport.requests import Request
 
 import scraper.flags

@@ -19,6 +19,7 @@ ADD crontab /app/
 RUN /usr/bin/crontab /app/crontab
 
 ADD gmail_token.pickle /app/
+ADD gmail_v1.json /app/
 
 # self-documentation
 ADD Dockerfile /app/

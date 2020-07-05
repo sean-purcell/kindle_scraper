@@ -3,6 +3,7 @@ from aiogoogle import Aiogoogle, GoogleAPI
 from aiogoogle.auth.creds import ClientCreds, UserCreds
 import base64
 import bs4
+import json
 
 import scraper.util
 import scraper.flags
@@ -72,7 +73,7 @@ async def _get_email(session, gmail, key):
 
     return (subject, article, ts)
 
-async def _get_after(gmail, creds, timestamp):
+async def _get_after(creds, gmail, timestamp):
     async with Aiogoogle(
         user_creds=_get_user_creds(creds), client_creds=_get_client_creds
     ) as session:
@@ -92,7 +93,8 @@ async def _get_after(gmail, creds, timestamp):
 def scrape(state, creds):
     timestamp = state.get("timestamp", 0)
 
-    gmail = GoogleAPI(open(scraper.flags.get_flags().gmail_discovery, 'rb'))
+    discovery = json.loads(open(scraper.flags.get_flags().gmail_discovery, 'rb').read())
+    gmail = GoogleAPI(discovery)
 
     emails = asyncio.run(_get_after(creds, gmail, timestamp))
 

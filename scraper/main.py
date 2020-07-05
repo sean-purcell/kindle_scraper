@@ -26,7 +26,7 @@ def run_module(name, state, creds):
 
 def send_docs(creds, docs):
     if not flags.no_send:
-        discovery = open(flags.gmail_discovery, 'rb')
+        discovery = open(flags.gmail_discovery, 'rb').read()
         for name, content in docs:
             print(f"Sending {name}")
             scraper.gmail.send_html(creds, discovery, name, content)
@@ -44,6 +44,7 @@ def get_state():
         return {}
 
 def store_state(state):
+    print(f"Writing new state: {state}")
     state_path = flags.state_file
     with open(state_path, "w") as f:
         f.write(json.dumps(state) + "\n")
