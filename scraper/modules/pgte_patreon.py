@@ -28,7 +28,6 @@ def _get_client_creds(creds):
 async def _get_email_ids(session, gmail):
     def _get_query():
         queries = [
-            "from:bing@patreon.com",
             'subject:"ErraticErrata just shared"',
             "newer_than:14d",
         ]
@@ -66,16 +65,16 @@ async def _get_email(session, gmail, key):
     html = base64.urlsafe_b64decode(b64).decode("utf-8")
 
     soup = bs4.BeautifulSoup(html, features="lxml")
-    a1 = soup.find("td", "contents")
-    a2 = soup.find("td", "body-copy")
-    article = a2 if a2 else a1
+    title_node = [ x for x in soup.find_all('span', color='dark') if len(list(x.children)) == 1][0]
+    title = title_node.contents[0]
+    article = list(title_node.parent.parent.parent.find_all('div', recursive=False))[1]
     article = str(article.decode_contents())
 
-    return (subject, article, ts)
+    return (title, article, ts)
 
 async def _get_after(creds, gmail, timestamp):
     async with Aiogoogle(
-        user_creds=_get_user_creds(creds), client_creds=_get_client_creds
+        user_creds=_get_user_creds(creds), client_creds=_get_client_creds(creds)
     ) as session:
         print(f"Getting emails")
 

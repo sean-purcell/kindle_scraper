@@ -17,7 +17,7 @@ def _get_chapters(previous):
 
     return sorted(
         filter(
-            lambda x: x[0] > previous,
+            lambda x: x[0] > previous and 'Protected:' not in x[1],
             [
                 (time.mktime(ent.published_parsed), ent.title, ent.content[0].value)
                 for ent in feed.entries

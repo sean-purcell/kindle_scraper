@@ -6,4 +6,4 @@ dst_address = seanpurcell97@kindle.com
 
 state_file = /data/scraper_state.json
 
-modules = pgte,wtc,ms,tgab
+modules = pgte,wtc,ms,tgab,pgte_patreon
