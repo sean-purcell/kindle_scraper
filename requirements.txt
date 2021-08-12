@@ -33,4 +33,4 @@ soupsieve==2.0
 tonyg-rfc3339==0.1
 typing-extensions==3.10.0.0
 uritemplate==3.0.1
-urllib3==1.25.9
+urllib3==1.26.5
