@@ -1,4 +1,4 @@
-email_token = gmail_token.pickle
+email_token = /data/token.pickle
 gmail_discovery = gmail_v1.json
 src_address = seanp.auto@gmail.com
 
@@ -6,4 +6,4 @@ dst_address = seanpurcell97@kindle.com
 
 state_file = /data/scraper_state.json
 
-modules = pgte,wtc,ms,tgab,pgte_patreon
+modules = pgte,wtc,ms,tgab,pgte_patreon,tutbad,pl
